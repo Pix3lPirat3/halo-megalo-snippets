@@ -2,8 +2,6 @@
   This script will attach the player's biped to a golf_ball.
   Notes:
     - The player on the golf ball has a constant view-height (camera DOESN'T spin crazy unless you offset the .attach_to)
-    - Due to attaching to golf_ball the player is invunerable (Still trying to figure this one out, set_invunerable(0) on both objects didn't work)
-    - Player cannot move/jump/use abilities while attached (might need to detatch between attaching frames)
 ]]
 
 --[[ Player Objects ]]
@@ -21,6 +19,16 @@ for each player do
     current_player.biped.attach_to(current_player.golf_ball, 0, 0, 0, relative) -- Attach player to golf_ball
     current_player.golf_ball.set_shape(box, 5, 5, 5, 5)
     current_player.golf_ball.set_shape_visibility(everyone)
+  end
+end
+
+-- =========================================================
+-- **DETACH/ATTACH BIPED FROM GOLF BALL (Fixes Invincible Biped)**
+-- ========================================================
+for each player do
+  if current_player.golf_ball != no_object and current_player.biped != no_object then
+	current_player.biped.attach_to(current_player.golf_ball, 0, 0, 0, relative)
+	current_player.biped.detach()
   end
 end
 
